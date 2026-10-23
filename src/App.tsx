@@ -1,26 +1,19 @@
-import "./App.css";
+import { sampleToday } from "./data/today";
+import Home from "./pages/Home";
+
+// 화면 전환은 플레이·자유 모드·기록·설정 화면을 만들 때 연결한다.
+const noop = () => {};
 
 function App() {
   return (
-    <main className="app" data-testid="apps-in-toss-starter">
-      <header className="app-header">
-        <h1 className="page-title">반가워요</h1>
-        <p className="page-subtitle">앱인토스 개발을 시작해 보세요.</p>
-      </header>
-
-      <nav className="app-actions" aria-label="Apps in Toss 링크">
-        <a className="app-button app-button-primary" href="https://developers-apps-in-toss.toss.im" target="_blank" rel="noopener noreferrer">
-          개발자센터
-        </a>
-        <a className="app-button app-button-primary" href="https://techchat-apps-in-toss.toss.im" target="_blank" rel="noopener noreferrer">
-          개발자 커뮤니티
-        </a>
-      </nav>
-
-      <div className="app-logo-wrap">
-        <img className="logo" src={`${import.meta.env.BASE_URL}appsintoss-logo.png`} alt="Apps in Toss" />
-      </div>
-    </main>
+    <Home
+      today={sampleToday}
+      onStartPuzzle={noop}
+      onContinueSet={noop}
+      onOpenFreeMode={noop}
+      onOpenRecords={noop}
+      onOpenSettings={noop}
+    />
   );
 }
 
