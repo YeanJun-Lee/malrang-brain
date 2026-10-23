@@ -158,7 +158,11 @@
   cursor: pointer;
 }
 
-.home-row:active {
+.home-row.is-static {
+  cursor: default;
+}
+
+button.home-row:active {
   background: var(--color-bg);
 }
 

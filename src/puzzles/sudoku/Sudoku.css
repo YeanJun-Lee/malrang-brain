@@ -1,0 +1,162 @@
+/* 스도쿠 판·숫자 패드 — 값은 src/styles/tokens.css의 토큰을 쓴다. */
+
+.sudoku {
+  --sudoku-line: #d1d6db;
+  --sudoku-line-strong: var(--color-text-subtle);
+  --sudoku-peer: var(--color-bg-canvas);
+  --sudoku-same: #e3e7f0;
+  --sudoku-selected: #c9d0e3;
+  --sudoku-key-height: 52px;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.sudoku-board {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  width: 100%;
+  max-width: 440px;
+  aspect-ratio: 1;
+  margin: 0 auto;
+  border: 2px solid var(--sudoku-line-strong);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--color-bg);
+}
+
+.sudoku-cell {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-right: 1px solid var(--sudoku-line);
+  border-bottom: 1px solid var(--sudoku-line);
+  background: var(--color-bg);
+  font: inherit;
+  font-size: var(--font-size-title);
+  line-height: 1;
+  color: var(--brand-primary);
+  cursor: pointer;
+}
+
+.sudoku-cell:nth-child(9n) {
+  border-right: 0;
+}
+
+.sudoku-cell:nth-child(n + 73) {
+  border-bottom: 0;
+}
+
+.sudoku-cell.edge-right {
+  border-right: 2px solid var(--sudoku-line-strong);
+}
+
+.sudoku-cell.edge-bottom {
+  border-bottom: 2px solid var(--sudoku-line-strong);
+}
+
+.sudoku-cell.is-given {
+  font-weight: 700;
+  color: var(--color-text-strong);
+}
+
+.sudoku-cell.is-peer {
+  background: var(--sudoku-peer);
+}
+
+.sudoku-cell.is-same {
+  background: var(--sudoku-same);
+}
+
+.sudoku-cell.is-selected {
+  background: var(--sudoku-selected);
+}
+
+.sudoku-cell.is-conflict {
+  color: var(--color-danger);
+}
+
+.sudoku-cell:disabled {
+  cursor: default;
+}
+
+/* 메모: 3×3 작은 숫자. 칸이 좁아 12px로 둔다(11px 이하는 쓰지 않는다). */
+.sudoku-notes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  height: 100%;
+  padding: 1px;
+  font-size: 12px;
+  line-height: 1;
+  color: var(--color-text-subtle);
+}
+
+.sudoku-notes > span {
+  display: grid;
+  place-items: center;
+}
+
+/* 숫자 패드: 5칸 × 2줄 */
+.sudoku-pad {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-2);
+}
+
+.sudoku-key {
+  min-height: var(--sudoku-key-height);
+  border: 0;
+  border-radius: 12px;
+  background: var(--color-bg-canvas);
+  font: inherit;
+  font-size: var(--font-size-title);
+  font-weight: 600;
+  color: var(--color-text-strong);
+  cursor: pointer;
+}
+
+.sudoku-key.is-text {
+  font-size: var(--font-size-body-small);
+}
+
+.sudoku-key:active:not(:disabled) {
+  background: var(--sudoku-same);
+}
+
+.sudoku-key:disabled {
+  color: var(--color-text-disabled);
+  cursor: default;
+}
+
+.sudoku-tools {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+}
+
+.sudoku-tool {
+  min-height: 44px;
+  border: 1px solid var(--sudoku-line);
+  border-radius: 12px;
+  background: var(--color-bg);
+  font: inherit;
+  font-size: var(--font-size-body-small);
+  font-weight: 600;
+  color: var(--color-text-default);
+  cursor: pointer;
+}
+
+.sudoku-tool.is-on {
+  border-color: var(--brand-primary);
+  background: var(--brand-primary);
+  color: var(--color-text-inverse);
+}
+
+.sudoku-tool:disabled {
+  color: var(--color-text-disabled);
+  cursor: default;
+}

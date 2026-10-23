@@ -1,0 +1,219 @@
+/* 플레이 화면 틀 — 값은 src/styles/tokens.css의 토큰을 쓴다. */
+
+.play {
+  --play-radius: 16px;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.play-toolbar {
+  display: flex;
+  gap: var(--space-2);
+  min-height: 44px;
+}
+
+.play-chip {
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border: 1px solid #d1d6db;
+  border-radius: 22px;
+  background: var(--color-bg);
+  font: inherit;
+  font-size: var(--font-size-body-small);
+  font-weight: 600;
+  color: var(--color-text-default);
+  cursor: pointer;
+}
+
+.play-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.play-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-title);
+  color: var(--color-text-strong);
+}
+
+.play-level {
+  padding: 2px var(--space-2);
+  border-radius: 8px;
+  background: var(--color-bg-canvas);
+  font-size: var(--font-size-caption);
+  font-weight: 400;
+  color: var(--color-text-subtle);
+}
+
+.play-timer {
+  margin: 0;
+  font-size: var(--font-size-title);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-strong);
+}
+
+.play-board.is-covered {
+  visibility: hidden;
+}
+
+/* 결과 */
+.play-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-4);
+  border-radius: var(--play-radius);
+  background: var(--color-bg-canvas);
+  text-align: center;
+}
+
+.play-result-title {
+  margin: 0;
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-title);
+  color: var(--color-text-strong);
+}
+
+.play-result-time {
+  margin: 0;
+  font-size: var(--font-size-display);
+  font-weight: var(--font-weight-display);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-strong);
+}
+
+.play-result-note {
+  margin: 0;
+  font-size: var(--font-size-body);
+  color: var(--color-text-default);
+}
+
+.play-result-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+  margin-top: var(--space-3);
+}
+
+/* 버튼 */
+.play-button {
+  width: 100%;
+  min-height: 56px;
+  border-radius: var(--play-radius);
+  font: inherit;
+  font-size: var(--font-size-body);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.play-button.is-primary {
+  border: 0;
+  background: var(--brand-primary);
+  color: var(--color-text-inverse);
+}
+
+.play-button.is-secondary {
+  border: 1px solid #d1d6db;
+  background: var(--color-bg);
+  color: var(--color-text-default);
+}
+
+.play-icon-button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 22px;
+  background: none;
+  color: var(--color-text-subtle);
+  cursor: pointer;
+}
+
+/* 바텀 시트 */
+.play-sheet-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.play-dim {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  border: 0;
+  background: var(--dim);
+  cursor: pointer;
+}
+
+.play-sheet {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-5) max(34px, env(safe-area-inset-bottom));
+  border-radius: 24px 24px 0 0;
+  background: var(--color-bg);
+}
+
+.play-sheet-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.play-sheet-title {
+  margin: 0;
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-title);
+  color: var(--color-text-strong);
+}
+
+.play-sheet-text {
+  margin: 0;
+  font-size: var(--font-size-body);
+  color: var(--color-text-default);
+}
+
+.play-rules {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+  padding-left: var(--space-5);
+  font-size: var(--font-size-body);
+  line-height: 1.5;
+  color: var(--color-text-default);
+}
+
+.play-sheet-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.play-loading {
+  padding: var(--space-6) 0;
+  font-size: var(--font-size-body);
+  color: var(--color-text-subtle);
+  text-align: center;
+}

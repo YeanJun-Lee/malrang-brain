@@ -1,5 +1,7 @@
 import { ChevronRight } from '../components/icons';
-import type { PuzzleKind, PuzzleStatus, TodayState } from '../data/today';
+import { WEEKDAYS, formatKoreanDate, formatSeconds, weekdayIndex } from '../lib/date';
+import { DIFFICULTY_LABEL, PUZZLES, type PuzzleKind } from '../puzzles/catalog';
+import type { PuzzleStatus, TodayState } from '../state/today';
 import './Home.css';
 
 type HomeProps = {
@@ -10,18 +12,6 @@ type HomeProps = {
   onOpenRecords: () => void;
   onOpenSettings: () => void;
 };
-
-const WEEKDAYS = ['월', '화', '수', '목', '금', '토', '일'];
-
-function formatDate(date: Date) {
-  return `${date.getMonth() + 1}월 ${date.getDate()}일 ${WEEKDAYS[(date.getDay() + 6) % 7]}요일`;
-}
-
-function formatSeconds(seconds: number) {
-  const m = Math.floor(seconds / 60);
-  const s = seconds % 60;
-  return `${m}분 ${String(s).padStart(2, '0')}초`;
-}
 
 function statusLabel(status: PuzzleStatus) {
   if (status.state === 'done') return `완료 · ${formatSeconds(status.seconds)}`;
@@ -41,14 +31,15 @@ export default function Home({
   const total = today.puzzles.length;
   const allDone = doneCount === total;
   const started = today.puzzles.some((p) => p.status.state !== 'todo');
-  const todayIndex = (today.date.getDay() + 6) % 7;
+  const todayIndex = weekdayIndex(today.date);
+  const level = DIFFICULTY_LABEL[today.difficulty];
 
   const ctaLabel = allDone ? '오늘 세트를 다 풀었어요' : started ? '이어 풀기' : '오늘의 세트 시작';
 
   return (
     <div className="home">
       <section className="home-hero">
-        <p className="home-date">{formatDate(today.date)}</p>
+        <p className="home-date">{formatKoreanDate(today.date)}</p>
         <h1 className="home-title">오늘의 두뇌 깨우기</h1>
         <p className="home-progress">
           {total}개 중 <strong>{doneCount}개</strong> 풀었어요
@@ -61,7 +52,13 @@ export default function Home({
             🔥
           </span>
           <p className="home-streak-days">
-            <strong>{today.streakDays}일</strong> 연속으로 풀었어요
+            {today.streakDays > 0 ? (
+              <>
+                <strong>{today.streakDays}일</strong> 연속으로 풀었어요
+              </>
+            ) : (
+              '오늘 세트를 풀면 연속 기록이 시작돼요'
+            )}
           </p>
         </div>
         <ol className="home-week">
@@ -87,27 +84,37 @@ export default function Home({
           오늘의 세트
         </h2>
         <ul className="home-card home-list">
-          {today.puzzles.map((puzzle) => (
-            <li key={puzzle.kind}>
-              <button type="button" className="home-row" onClick={() => onStartPuzzle(puzzle.kind)}>
-                <span className={`home-row-icon kind-${puzzle.kind} tf`} aria-hidden="true">
-                  {puzzle.emoji}
+          {today.puzzles.map(({ kind, status }) => {
+            const content = (
+              <>
+                <span className={`home-row-icon kind-${kind} tf`} aria-hidden="true">
+                  {PUZZLES[kind].emoji}
                 </span>
                 <span className="home-row-text">
                   <span className="home-row-name">
-                    {puzzle.name}
-                    <span className="home-row-level">{puzzle.difficulty}</span>
+                    {PUZZLES[kind].name}
+                    <span className="home-row-level">{level}</span>
                   </span>
-                  <span className={`home-row-status status-${puzzle.status.state}`}>
-                    {statusLabel(puzzle.status)}
-                  </span>
+                  <span className={`home-row-status status-${status.state}`}>{statusLabel(status)}</span>
                 </span>
-                <span className="home-row-chevron">
-                  <ChevronRight size={20} />
-                </span>
-              </button>
-            </li>
-          ))}
+              </>
+            );
+            // 다 푼 퍼즐은 다시 열지 않는다(다시 풀면 기록이 덮어써진다)
+            return (
+              <li key={kind}>
+                {status.state === 'done' ? (
+                  <div className="home-row is-static">{content}</div>
+                ) : (
+                  <button type="button" className="home-row" onClick={() => onStartPuzzle(kind)}>
+                    {content}
+                    <span className="home-row-chevron">
+                      <ChevronRight size={20} />
+                    </span>
+                  </button>
+                )}
+              </li>
+            );
+          })}
         </ul>
       </section>
 
